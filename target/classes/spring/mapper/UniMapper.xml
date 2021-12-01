@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.UniMapper"> 
+
+
+<!--  검색리스트 출력 (학교명)-->
+<select id="getCount"   resultType="int">
+	SELECT COUNT(*) FROM uni_tbl 
+	
+	 <if test="keywordName !=null">
+	WHERE schoolName LIKE '%'||#{keywordName}||'%' 
+	</if>
+	
+</select>
+<!--  검색리스트 출력 (지역별)-->
+<select id="getRegionCount"   resultType="int">
+	SELECT COUNT(*) FROM uni_tbl 
+	
+	 <if test="keywordName !=null">
+	WHERE region LIKE '%'||#{keywordName}||'%' 
+	</if>
+	
+</select>
+
+
+<!-- 대학이름으로 검색 -->
+<select id="getUniNameList"  resultType="spring.vo.UniVo">
+<![CDATA[
+  	SELECT *FROM
+( SELECT /*+INDEX_ASC(uni_tbl schoolName) */
+ROWNUM AS rNum,schoolName, schoolCubun, schoolType, region, adres, link
+  	 FROM uni_tbl   WHERE ROWNUM <= #{pageNum} *#{amount}  
+  	 ]]>
+  	 <if test="keywordName !=null">
+  	 AND schoolName LIKE '%'||#{keywordName}||'%' 
+  	 </if>
+  	 <![CDATA[
+  	  ) 
+  	  WHERE rNum >(#{pageNum}-1)*#{amount}
+  	]]>
+</select>
+
+<!--  지역별 검색 -->
+<select id="getUniRegionList"  resultType="spring.vo.UniVo">
+<![CDATA[
+  	SELECT *FROM
+( SELECT /*+INDEX_ASC(uni_tbl schoolName) */
+ROWNUM AS rNum,schoolName, schoolCubun, schoolType, region, adres, link
+  	 FROM uni_tbl   WHERE ROWNUM <= #{pageNum} *#{amount}  
+  	 ]]>
+  	 <if test="keywordName !=null">
+  	 AND region LIKE '%'||#{keywordName}||'%' 
+  	 </if>
+  	 <![CDATA[
+  	  ) 
+  	  WHERE rNum >(#{pageNum}-1)*#{amount}
+  	]]>
+</select>
+
+</mapper>

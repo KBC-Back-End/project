@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+/* 초기화 */
+*{margin:0; padding:0;}
+ol,ul{list-style:none;}
+table{border-collapse: collapse;}
+a{text-decoration: none;color:#000;}
+
+body{
+	font-size: 16px; 
+	line-height: 26px;
+}
+
+/* 화면 전체 */
+.wrap{
+	min-width:1200px;
+	overflow:hidden;
+}
+/* header */
+
+#header .header_inner{
+    width: 1080px;
+    height: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+#header h1{
+    position: absolute;
+    left: 0;
+    top: 20px;
+}
+#header .gnb{
+    position: absolute;
+    left: 100px;
+    top: 150px;
+	
+}
+
+#header .gnb > li {float:left;}
+
+#header .header_inner>#top_header>a>img{
+    width: 230px;
+    margin-top: -60px;
+    margin-left: -10px;
+}
+
+#header .gnb > li > a {
+    display: block;
+    padding: 10px 41px;
+    font-weight: bold;
+    font-size: 25px;
+    text-transform: capitalize;
+}
+
+#header .gnb > li:hover > a{
+    background: #008037;
+    color:#fff;
+}
+
+
+#top_header{
+    position: absolute;
+    left: 280px;
+    top: 20px; 
+}
+#top_header>h1{
+    left: 200px;
+    font-size: 50px;
+    width: 300px;
+    margin-top:27px;
+}
+
+/* 2차메뉴 */
+
+#header .gnb .dpt2{
+    text-align: center;
+    padding: 20px 0;
+    border:1px solid #008037;
+    background: #fff;
+}
+#header .gnb .dpt2 li {
+    padding: 5px 0;
+    background: #fff;
+}
+#header .gnb .dpt2 li a{display: block;}
+#header .dpt2 li:hover a{
+    background: #008037;
+    color:#fff;
+    font-weight: bold;
+}
+
+hr{
+	margin-top:25px;
+	text-align:center;
+	height:0.1px;
+	background: lightgray;
+	width:100%;
+}

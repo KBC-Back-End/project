@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring.mapper.DpmMapper"> 
+
+
+<!--  검색리스트 출력(학과)-->
+<select id="getCount"   resultType="int">
+	SELECT COUNT(*) FROM dpm_tbl 
+	
+	 <if test="keywordName !=null">
+	WHERE department LIKE '%'||#{keywordName}||'%' 
+	</if>
+	
+</select>
+<!--  검색리스트 출력(계열)-->
+<select id="getLdpmtCount"   resultType="int">
+	SELECT COUNT(*) FROM dpm_tbl 
+	
+	 <if test="keywordName !=null">
+	WHERE ldpmt LIKE '%'||#{keywordName}||'%' 
+	</if>
+	
+</select>
+
+<!-- 학과명으로 검색 -->
+<select id="getDpmNameList"  resultType="spring.vo.DpmVo">
+<![CDATA[
+  	SELECT *FROM
+( SELECT /*+INDEX_ASC(dpm_tbl schoolName) */
+ROWNUM AS rNum,schoolName, schoolGubun, schoolType, region, ldpmt, department
+  	 FROM dpm_tbl   WHERE ROWNUM <= #{pageNum} *#{amount}  
+  	 ]]>
+  	 <if test="keywordName !=null">
+  	 AND department LIKE '%'||#{keywordName}||'%' 
+  	 </if>
+  	 <![CDATA[
+  	  ) 
+  	  WHERE rNum >(#{pageNum}-1)*#{amount}
+  	]]>
+</select>
+
+<!--  학과별 검색 -->
+<select id="getLdpmList"  resultType="spring.vo.DpmVo">
+<![CDATA[
+  	SELECT *FROM
+( SELECT /*+INDEX_ASC(dpm_tbl schoolName) */
+ROWNUM AS rNum,schoolName, schoolGubun, schoolType, region, ldpmt, department
+  	 FROM dpm_tbl    WHERE ROWNUM <= #{pageNum} *#{amount}  
+  	 ]]>
+  	 <if test="keywordName !=null">
+  	 AND  ldpmt LIKE '%'||#{keywordName}||'%' 
+  	 </if>
+  	 <![CDATA[
+  	  ) 
+  	  WHERE rNum >(#{pageNum}-1)*#{amount}
+  	]]>
+</select>
+
+
+
+
+
+</mapper>
